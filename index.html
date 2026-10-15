@@ -72,6 +72,45 @@ h1{font-weight:950;letter-spacing:-.055em}
 @media(max-height:700px){.page{padding-top:14px;padding-bottom:18px}.hero-gift{width:100px;margin:13px auto 10px}.hero-gift span{font-size:60px}.intro-title{font-size:clamp(38px,9vw,60px);margin:14px 0 8px}.count-wrap{margin:14px auto 5px}.count{width:56px;height:56px;font-size:28px}.foot{margin-top:14px}.glass-card{padding:20px 18px}.card-emoji{font-size:52px;margin:8px 0 0}.card-title{margin:8px 0}.copy{line-height:1.75}.card-meta{margin-top:15px}.btn{margin-top:16px}.birthday-title{font-size:clamp(38px,9vw,64px);margin:12px 0}}
 @media(max-width:360px){.tag{font-size:9px;letter-spacing:1.4px;padding:8px 11px}.glass-card{border-radius:24px;padding:22px 15px}.birthday-title{font-size:40px}.btn{padding:13px 17px;font-size:11px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800;900&display=swap');
+/* A more romantic editorial type system */
+body{font-family:'Hind Siliguri',ui-rounded,'Segoe UI',system-ui,sans-serif}
+.intro-title,.birthday-title,.finaltext h2{font-family:'Playfair Display','DM Serif Display',Georgia,serif}
+.card-title{font-family:'DM Serif Display','Playfair Display',Georgia,serif;font-weight:400;letter-spacing:-.025em}
+.copy,.small,.sub{font-family:'Hind Siliguri',sans-serif}
+.glass-card{border-color:#ffc6e13d;box-shadow:0 28px 90px #0007,inset 0 1px #ffffff30,0 0 35px #ff5eaa0b}
+.glass-card:after{content:"";position:absolute;inset:7px;border:1px solid #ffd9ec13;border-radius:23px;pointer-events:none}
+#card{animation:cardEnter .72s cubic-bezier(.18,.82,.24,1) both}
+#card .card-top{animation:rise .6s .08s both}
+#card .card-emoji{animation:emojiEntrance .85s cubic-bezier(.18,.9,.25,1) both,emojiBob 3s 1s ease-in-out infinite}
+#card .card-title{animation:letterGlow 3.4s ease-in-out infinite alternate}
+#card .copy{animation:rise .7s .2s both}
+.card-emoji{position:relative;text-shadow:0 0 30px #ff8dc54d}
+.card-emoji:after{content:"✧";position:absolute;font-size:20px;color:#ffe7a5;transform:translate(14px,-14px);animation:twinkle 1.8s ease-in-out infinite}
+.card-title{ text-shadow:0 0 28px #ff88c51c}
+#finale{background:radial-gradient(ellipse at 50% 28%,#92285f 0%,#521342 32%,#260d2b 64%,#100817 100%)}
+#finale:after{content:"";position:absolute;inset:-30%;z-index:-1;background:conic-gradient(from 0deg at 50% 50%,transparent,#ff7eb81a,transparent,#ffe3a014,transparent);animation:finalHalo 22s linear infinite}
+.finaltext{padding:clamp(18px,4vw,32px);border-radius:32px;border:1px solid #ffd1e62c;background:linear-gradient(145deg,#ffffff0d,#ffffff02);box-shadow:0 25px 100px #0004,inset 0 1px #ffffff17;backdrop-filter:blur(6px)}
+.final-eyebrow{animation:rise .7s .1s both}
+.heart{animation:heartBeat 1.2s ease-in-out infinite,heartGlow 2.8s ease-in-out infinite alternate}
+.finaltext h2{font-weight:900;line-height:.98;text-shadow:0 0 35px #ff65af23}
+.finaltext h2 .love-line{display:block;white-space:nowrap}
+.finaltext h2 .love-letter{display:inline-block;transform-origin:50% 85%;animation:loveLetter 2.8s ease-in-out infinite;animation-delay:calc(var(--i)*.055s)}
+.finaltext h2 .love-letter.space{width:.25em}
+.finaltext .small{animation:rise .8s .3s both}
+.signature{font-family:'DM Serif Display',Georgia,serif;font-size:16px;animation:rise .8s .45s both}
+#again{animation:rise .8s .6s both}
+.rose{z-index:1}
+@keyframes cardEnter{from{opacity:0;transform:translateY(28px) scale(.94);filter:blur(7px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@keyframes emojiEntrance{0%{opacity:0;transform:translateY(18px) scale(.55) rotate(-15deg)}70%{transform:translateY(-6px) scale(1.1) rotate(5deg)}100%{opacity:1;transform:translateY(0) scale(1) rotate(0)}}
+@keyframes letterGlow{from{text-shadow:0 0 8px #ffb2d51a}to{text-shadow:0 0 28px #ff9acb55,0 0 45px #ffdb9c20}}
+@keyframes loveLetter{0%,100%{transform:translateY(0) rotate(0) scale(1)}35%{transform:translateY(-7px) rotate(-2deg) scale(1.035)}60%{transform:translateY(1px) rotate(1deg) scale(.99)}}
+@keyframes heartGlow{from{filter:drop-shadow(0 0 14px #ff4f9a66)}to{filter:drop-shadow(0 0 35px #ff4f9ad9)}}
+@keyframes finalHalo{to{transform:rotate(360deg)}}
+@media(max-width:360px){.finaltext{padding:18px 10px}.finaltext h2{font-size:clamp(38px,12vw,47px)}}
+@media(prefers-reduced-motion:reduce){#card,#card .card-top,#card .card-emoji,#card .card-title,#card .copy,.finaltext h2 .love-letter{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -104,7 +143,7 @@ h1{font-weight:950;letter-spacing:-.055em}
 </main>
 <section id="finale" class="hide" aria-label="Final birthday message"><div class="finaltext">
 <div class="final-eyebrow">✦ ONE LAST THING, BOU ✦</div><div class="heart" aria-hidden="true">❤️</div>
-<h2>I LOVE YOU,<br>BOUUU! 🌹</h2>
+<h2 id="loveTitle" aria-label="I love you, Bouuu!"><span class="love-line" id="loveLineOne"></span><span class="love-line" id="loveLineTwo"></span></h2>
 <p class="small">স্কুল লাইফ থেকে তুই আমার জীবনের একটা সুন্দর অংশ। ❤️<br>আজকের দিনে তোর মুখে সবচেয়ে বড় হাসিটা দেখতে চাই।<br>Happy Birthday, amar bouuu! 🌹💖</p>
 <div class="signature">— শুধু তোর জন্য, মেহেদি ❤️</div>
 <button class="btn" id="again" type="button">↻ REPLAY THE SURPRISE</button>
@@ -128,6 +167,8 @@ let index=0,timer=null,count=5,soundOn=false,audioCtx=null,toastTimer=null,parti
 const toast=message=>{const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2200)};
 function makeLetters(id,text,start=0){$(id).innerHTML=Array.from(text).map((ch,j)=>ch===' '?'<span class="letter" style="--i:'+(j+start)+'">&nbsp;</span>':'<span class="letter" style="--i:'+(j+start)+'">'+ch+'</span>').join('')}
 makeLetters('birthdayLetters','BIRTHDAY',0);makeLetters('taniyaLetters','TANIYA! ❤️',8);
+function makeLoveLine(id,text,start=0){$(id).innerHTML=Array.from(text).map((ch,j)=>ch===' '?'<span class="love-letter space" style="--i:'+(j+start)+'">&nbsp;</span>':'<span class="love-letter" style="--i:'+(j+start)+'">'+ch+'</span>').join('')}
+makeLoveLine('loveLineOne','I LOVE YOU,',0);makeLoveLine('loveLineTwo','BOUUU! 🌹',12);
 function chime(){if(!soundOn)return;try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();[523.25,659.25,783.99].forEach((freq,i)=>{const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type='sine';osc.frequency.value=freq;gain.gain.setValueAtTime(.0001,audioCtx.currentTime+i*.12);gain.gain.exponentialRampToValueAtTime(.075,audioCtx.currentTime+i*.12+.025);gain.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+i*.12+.3);osc.connect(gain);gain.connect(audioCtx.destination);osc.start(audioCtx.currentTime+i*.12);osc.stop(audioCtx.currentTime+i*.12+.32)})}catch(e){toast('Sound effects are not available in this browser.')}}
 $('sound').addEventListener('click',()=>{soundOn=!soundOn;$('sound').textContent=soundOn?'♫':'♪';$('sound').setAttribute('aria-label',soundOn?'Turn birthday sounds off':'Turn birthday sounds on');toast(soundOn?'Birthday chimes on ✨':'Birthday chimes off');if(soundOn)chime()});
 function burst(amount=35,target=finale){const emojis=['🌹','🌷','💖','❤️','✨','💐','✦'];for(let k=0;k<amount;k++){const el=document.createElement('span');el.className='rose';el.textContent=emojis[Math.random()*emojis.length|0];el.style.setProperty('--x',Math.random()*94+2+'%');el.style.setProperty('--y',Math.random()*92+4+'%');el.style.setProperty('--s',14+Math.random()*24+'px');el.style.setProperty('--t',2+Math.random()*3+'s');target.appendChild(el);setTimeout(()=>el.remove(),8000)}}
