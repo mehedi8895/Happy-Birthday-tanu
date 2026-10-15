@@ -111,6 +111,21 @@ body{font-family:'Hind Siliguri',ui-rounded,'Segoe UI',system-ui,sans-serif}
 @media(max-width:360px){.finaltext{padding:18px 10px}.finaltext h2{font-size:clamp(38px,12vw,47px)}}
 @media(prefers-reduced-motion:reduce){#card,#card .card-top,#card .card-emoji,#card .card-title,#card .copy,.finaltext h2 .love-letter{animation:none!important}}
 
+
+/* Each birthday slide gets its own staggered typography reveal */
+.card-title{font-family:'Playfair Display','DM Serif Display',Georgia,serif;font-weight:800;line-height:1.16}
+.title-char{display:inline-block;opacity:0;transform:translateY(24px) rotateX(-65deg) scale(.82);transform-origin:50% 100%;animation:slideTitleChar .65s cubic-bezier(.2,.85,.25,1) forwards;animation-delay:calc(var(--char-i)*.045s)}
+.copy-word{display:inline-block;opacity:0;transform:translateY(10px);filter:blur(3px);animation:slideWord .55s ease-out forwards;animation-delay:calc(var(--word-i)*.035s + .24s);margin-right:.22em}
+.card-top{animation:rise .6s .04s both}
+#card .label{animation:rise .6s .12s both}
+#card .card-meta{animation:rise .6s .45s both}
+#card .track{animation:rise .6s .5s both}
+#next{transition:transform .22s,box-shadow .22s}
+#next:hover{transform:translateY(-3px) scale(1.025)}
+@keyframes slideTitleChar{0%{opacity:0;transform:translateY(24px) rotateX(-65deg) scale(.82);filter:blur(5px)}65%{opacity:1;transform:translateY(-3px) rotateX(8deg) scale(1.05);filter:blur(0)}100%{opacity:1;transform:translateY(0) rotateX(0) scale(1);filter:blur(0)}}
+@keyframes slideWord{to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@media(prefers-reduced-motion:reduce){.title-char,.copy-word{opacity:1;transform:none;filter:none;animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -172,7 +187,9 @@ makeLoveLine('loveLineOne','I LOVE YOU,',0);makeLoveLine('loveLineTwo','BOUUU! �
 function chime(){if(!soundOn)return;try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();[523.25,659.25,783.99].forEach((freq,i)=>{const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type='sine';osc.frequency.value=freq;gain.gain.setValueAtTime(.0001,audioCtx.currentTime+i*.12);gain.gain.exponentialRampToValueAtTime(.075,audioCtx.currentTime+i*.12+.025);gain.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+i*.12+.3);osc.connect(gain);gain.connect(audioCtx.destination);osc.start(audioCtx.currentTime+i*.12);osc.stop(audioCtx.currentTime+i*.12+.32)})}catch(e){toast('Sound effects are not available in this browser.')}}
 $('sound').addEventListener('click',()=>{soundOn=!soundOn;$('sound').textContent=soundOn?'♫':'♪';$('sound').setAttribute('aria-label',soundOn?'Turn birthday sounds off':'Turn birthday sounds on');toast(soundOn?'Birthday chimes on ✨':'Birthday chimes off');if(soundOn)chime()});
 function burst(amount=35,target=finale){const emojis=['🌹','🌷','💖','❤️','✨','💐','✦'];for(let k=0;k<amount;k++){const el=document.createElement('span');el.className='rose';el.textContent=emojis[Math.random()*emojis.length|0];el.style.setProperty('--x',Math.random()*94+2+'%');el.style.setProperty('--y',Math.random()*92+4+'%');el.style.setProperty('--s',14+Math.random()*24+'px');el.style.setProperty('--t',2+Math.random()*3+'s');target.appendChild(el);setTimeout(()=>el.remove(),8000)}}
-function render(){const d=data[index];$('card').innerHTML='<div class="card-top"><span class="spark">✦</span> SURPRISE '+(index+1)+' OF '+data.length+' <span class="spark">✦</span></div><div class="card-emoji" aria-hidden="true">'+d.emoji+'</div><div class="label">'+d.eyebrow+'</div><h2 class="card-title">'+d.title+'</h2><p class="copy">'+d.copy+'</p><div class="card-meta"><span>YOUR BIRTHDAY MAGIC</span><span>'+String(index+1).padStart(2,'0')+' / '+String(data.length).padStart(2,'0')+'</span></div><div class="track" aria-hidden="true"><span style="width:'+((index+1)/data.length*100)+'%"></span></div>';$('dots').innerHTML=data.map((_,j)=>'<span class="dot '+(j===index?'active':'')+'" aria-hidden="true"></span>').join('');$('next').innerHTML=(index===data.length-1?'OPEN THE FINAL SURPRISE':'NEXT SURPRISE')+' <span aria-hidden="true">✧ →</span>';chime()}
+function animatedSlideTitle(text){return Array.from(text).map((ch,i)=>ch===' '?'<span class="title-char" style="--char-i:'+i+'">&nbsp;</span>':'<span class="title-char" style="--char-i:'+i+'">'+ch+'</span>').join('')}
+function animatedSlideCopy(html){return html.split(/(<br\\s*\\/?\\s*>)/i).map(part=>/^<br/i.test(part)?part:part.split(/(\\s+)/).map(word=>!word||/^\\s+$/.test(word)?word:'<span class="copy-word" style="--word-i:'+animatedSlideCopy.step+++'">'+word+'</span>').join('')).join('')}
+function render(){const d=data[index];animatedSlideCopy.step=0;$('card').innerHTML='<div class="card-top"><span class="spark">✦</span> SURPRISE '+(index+1)+' OF '+data.length+' <span class="spark">✦</span></div><div class="card-emoji" aria-hidden="true">'+d.emoji+'</div><div class="label">'+d.eyebrow+'</div><h2 class="card-title">'+animatedSlideTitle(d.title)+'</h2><p class="copy">'+animatedSlideCopy(d.copy)+'</p><div class="card-meta"><span>YOUR BIRTHDAY MAGIC</span><span>'+String(index+1).padStart(2,'0')+' / '+String(data.length).padStart(2,'0')+'</span></div><div class="track" aria-hidden="true"><span style="width:'+((index+1)/data.length*100)+'%"></span></div>';$('dots').innerHTML=data.map((_,j)=>'<span class="dot '+(j===index?'active':'')+'" aria-hidden="true"></span>').join('');$('next').innerHTML=(index===data.length-1?'OPEN THE FINAL SURPRISE':'NEXT SURPRISE')+' <span aria-hidden="true">✧ →</span>';chime()}
 function show(section){[intro,reveal,wishes,finale].forEach(el=>el.classList.add('hide'));section.classList.remove('hide')}
 function startCountdown(){clearInterval(timer);count=5;$('count').textContent=count;$('loadbar').style.animation='none';void $('loadbar').offsetWidth;$('loadbar').style.animation='load 5s linear forwards';show(intro);if(reduced){show(reveal);return}timer=setInterval(()=>{count--;if(count>0){$('count').textContent=count;chime()}else{clearInterval(timer);timer=null;show(reveal);burst(42,document.body);chime()}},1000)}
 $('start').addEventListener('click',()=>{index=0;render();show(wishes);burst(26,document.body)});
